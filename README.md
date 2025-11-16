@@ -1,7 +1,7 @@
 # CLI Docker Wrapper Template
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE.md)
-[![Template](https://img.shields.io/badge/template-Use%20this%20template-success?style=flat-square)](https://github.com/zero-to-prod/docker-wrapper-template/generate)
+[![Template](https://img.shields.io/badge/template-Use%20this%20template-success?style=flat-square)](#)
 
 A production-ready GitHub template for creating Docker-wrapped CLI tools. Package any command-line tool in a container with automatic archive extraction, authentication support, and complete documentation.
 
@@ -31,10 +31,7 @@ See [EXAMPLE_TOOLS.md](./EXAMPLE_TOOLS.md) for complete configurations.
 
 ### Step 1: Use This Template
 
-Click **"Use this template"** above or visit:
-```
-https://github.com/zero-to-prod/docker-wrapper-template/generate
-```
+Click **"Use this template"** above to create your own repository from this template.
 
 ### Step 2: Run Setup
 
@@ -240,12 +237,10 @@ This project is licensed under the MIT License - see [LICENSE.md](./LICENSE.md) 
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/zero-to-prod/docker-wrapper-template/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/zero-to-prod/docker-wrapper-template/discussions)
+- **Issues**: Report issues in your repository's issue tracker
+- **Discussions**: Use GitHub Discussions for questions and ideas
 - **Documentation**: See guides above
 
 ---
-
-**Maintained by**: [ZeroToProd](https://github.com/zero-to-prod)
 
 **Ready to create your CLI wrapper?** Click "Use this template" above! 🚀

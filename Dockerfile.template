@@ -33,6 +33,9 @@ RUN if [ "{{ARCHIVE_TYPE}}" = "binary" ]; then \
 
 FROM {{RUNTIME_IMAGE}}
 
+# Install git for CLI tools that require repository context
+RUN apk add --no-cache git
+
 WORKDIR /app
 
 LABEL org.opencontainers.image.title="{{CLI_TOOL_SHORTNAME}} - {{CLI_TOOL_DISPLAY_NAME}}"
@@ -40,9 +43,9 @@ LABEL org.opencontainers.image.description="{{TOOL_DESCRIPTION}}"
 LABEL org.opencontainers.image.url="https://github.com/{{SOURCE_REPO}}"
 LABEL org.opencontainers.image.documentation="{{DOCS_URL}}"
 LABEL org.opencontainers.image.source="https://github.com/{{SOURCE_REPO}}"
-LABEL org.opencontainers.image.vendor="ZeroToProd"
+LABEL org.opencontainers.image.vendor="{{VENDOR_NAMESPACE}}"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL usage="docker run -it --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} {{DOCKER_IMAGE_NAME}} [COMMAND] [OPTIONS]"
+LABEL usage="docker run --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} -v \$(pwd):/workspace -w /workspace {{DOCKER_IMAGE_NAME}} [COMMAND] [OPTIONS]"
 
 COPY --from=builder /builder/{{BINARY_NAME}} /usr/local/bin/{{BINARY_NAME}}
 

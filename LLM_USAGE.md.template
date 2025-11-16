@@ -1,0 +1,160 @@
+# {{CLI_TOOL_DISPLAY_NAME}} ({{CLI_TOOL_NAME}}) Docker Wrapper - LLM Usage Guide
+
+This guide is specifically designed for Large Language Models (LLMs) and AI assistants to help users interact with {{CLI_TOOL_DISPLAY_NAME}} using the {{CLI_TOOL_NAME}} CLI tool wrapped in Docker.
+
+## Quick Reference
+
+**Docker Image**: `{{DOCKER_IMAGE_NAME}}`
+**GitHub Repository**: `{{SOURCE_REPO}}`
+**Base Command**: `docker run --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} -v $(pwd):/workspace -w /workspace {{DOCKER_IMAGE_NAME}}`
+
+## Prerequisites Check
+
+Before suggesting {{CLI_TOOL_NAME}} commands, verify:
+1. Docker is installed and running
+2. User is in a git repository ({{CLI_TOOL_NAME}} requires git context)
+{{#if AUTH_REQUIRED}}
+3. User has authenticated (if not, guide them through auth)
+{{/if}}
+
+## Command Patterns
+
+### Standard Command Format
+
+```bash
+docker run --rm \
+  -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} \
+  -v $(pwd):/workspace \
+  -w /workspace \
+  {{DOCKER_IMAGE_NAME}} [COMMAND] [OPTIONS]
+```
+
+{{#if AUTH_REQUIRED}}
+### Interactive Command Format (for auth)
+
+```bash
+docker run -it --rm \
+  -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} \
+  {{DOCKER_IMAGE_NAME}} {{AUTH_COMMAND}}
+```
+{{/if}}
+
+### Using Alias (Recommended)
+
+Suggest users set up an alias:
+```bash
+alias {{CLI_TOOL_NAME}}='docker run --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} -v $(pwd):/workspace -w /workspace {{DOCKER_IMAGE_NAME}}'
+```
+
+Then commands become:
+```bash
+{{CLI_TOOL_NAME}} [COMMAND] [OPTIONS]
+```
+
+## Common Use Cases
+
+{{#if AUTH_REQUIRED}}
+### Authentication
+
+**First-time setup:**
+```bash
+docker run -it --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} {{DOCKER_IMAGE_NAME}} {{AUTH_COMMAND}}
+```
+
+**Check auth status:**
+```bash
+docker run --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} {{DOCKER_IMAGE_NAME}} auth status
+```
+{{/if}}
+
+### Example Command
+
+**{{EXAMPLE_COMMAND}}:**
+```bash
+docker run --rm -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} -v $(pwd):/workspace -w /workspace {{DOCKER_IMAGE_NAME}} {{EXAMPLE_COMMAND}}
+```
+
+## Important Notes for LLMs
+
+### Volume Mounts Are Critical
+
+1. **Config volume** (`-v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}}`): Stores {{#if AUTH_REQUIRED}}authentication credentials and {{/if}}configuration
+2. **Workspace volume** (`-v $(pwd):/workspace -w /workspace`): Provides git repository context
+
+**Always include both volumes** unless the command is purely configuration-related{{#if AUTH_REQUIRED}} (like `{{AUTH_COMMAND}}`){{/if}}.
+
+### When to Use `-it` Flag
+
+- **Use `-it`**: For interactive commands{{#if AUTH_REQUIRED}} like `{{AUTH_COMMAND}}`{{/if}}
+- **Omit `-it`**: For standard commands that don't require user input
+
+### Common Errors and Solutions
+
+**Error: "not a git repository"**
+- **Cause**: Missing workspace volume mount or not in a git repository
+- **Solution**: Ensure command includes `-v $(pwd):/workspace -w /workspace` and user is in a git repository
+
+{{#if AUTH_REQUIRED}}
+**Error: "401 Unauthorized" or "authentication required"**
+- **Cause**: User hasn't authenticated
+- **Solution**: Guide user through `{{AUTH_COMMAND}}` process
+{{/if}}
+
+**Error: "pull access denied"**
+- **Cause**: Using wrong Docker image name
+- **Solution**: Ensure using `{{DOCKER_IMAGE_NAME}}`, not the GitHub repository name
+
+### Environment Variables
+
+Suggest these environment variables when helpful:
+
+```bash
+docker run --rm \
+  -e TZ=UTC \
+  -v ~/.config/{{CONFIG_DIR_NAME}}:/root/.config/{{CONFIG_DIR_NAME}} \
+  -v $(pwd):/workspace \
+  -w /workspace \
+  {{DOCKER_IMAGE_NAME}} [COMMAND]
+```
+
+## Help and Documentation
+
+**General help:**
+```bash
+docker run --rm {{DOCKER_IMAGE_NAME}} --help
+```
+
+**Command-specific help:**
+```bash
+docker run --rm {{DOCKER_IMAGE_NAME}} [COMMAND] --help
+```
+
+## Best Practices for LLM Responses
+
+1. **Always provide complete commands** with full volume mounts
+2. **Explain what the command does** before suggesting it
+3. **Check prerequisites** (Docker installed, in git repo{{#if AUTH_REQUIRED}}, authenticated{{/if}})
+4. **Suggest the alias** for users who will use {{CLI_TOOL_NAME}} frequently
+5. **Provide context** about volume mounts and why they're needed
+6. **Offer alternatives** when a command might fail
+7. **Show expected output** when helpful for user understanding
+
+## Installation Command
+
+If user doesn't have {{CLI_TOOL_NAME}} installed:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/{{SOURCE_REPO}}/main/install.sh | bash
+```
+
+Or manually:
+```bash
+docker pull {{DOCKER_IMAGE_NAME}}:latest
+```
+
+---
+
+**For more information:**
+- Docker Hub: https://hub.docker.com/r/{{DOCKER_IMAGE_NAME}}
+- GitHub Repository: https://github.com/{{SOURCE_REPO}}
+- Official Documentation: {{DOCS_URL}}

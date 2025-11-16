@@ -295,7 +295,3 @@ For issues with:
 ## License
 
 This template is licensed under the MIT License. Generated projects inherit this license by default, but you can change it to fit your needs.
-
----
-
-**Template Maintained by**: [ZeroToProd](https://github.com/zero-to-prod)

@@ -6,10 +6,7 @@ This guide will have you up and running with your own CLI wrapper in under 5 min
 
 ### Step 1: Create Your Repository
 
-Click **"Use this template"** on GitHub or visit:
-```
-https://github.com/zero-to-prod/docker-wrapper-template/generate
-```
+Click **"Use this template"** on GitHub to create your own repository from this template.
 
 ### Step 2: Clone and Setup
 
@@ -194,10 +191,6 @@ chmod 700 ~/.config/your-tool-name
 
 ## Getting Help
 
-- Template Issues: https://github.com/zero-to-prod/docker-wrapper-template/issues
-- Examples: See [EXAMPLE_TOOLS.md](./EXAMPLE_TOOLS.md)
-- Detailed Guide: See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md)
-
----
-
-**Template by**: [ZeroToProd](https://github.com/zero-to-prod)
+- **Template Issues**: Report issues in the template repository
+- **Examples**: See [EXAMPLE_TOOLS.md](./EXAMPLE_TOOLS.md)
+- **Detailed Guide**: See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md)

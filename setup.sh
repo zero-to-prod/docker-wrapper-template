@@ -216,6 +216,7 @@ replace_in_file "Dockerfile.template" "{{CLI_TOOL_SHORTNAME}}" "$CLI_TOOL_SHORTN
 replace_in_file "Dockerfile.template" "{{CLI_TOOL_DISPLAY_NAME}}" "$CLI_TOOL_DISPLAY_NAME"
 replace_in_file "Dockerfile.template" "{{TOOL_DESCRIPTION}}" "$TOOL_DESCRIPTION"
 replace_in_file "Dockerfile.template" "{{SOURCE_REPO}}" "$SOURCE_REPO"
+replace_in_file "Dockerfile.template" "{{VENDOR_NAMESPACE}}" "$VENDOR_NAMESPACE"
 replace_in_file "Dockerfile.template" "{{DOCS_URL}}" "$DOCS_URL"
 replace_in_file "Dockerfile.template" "{{DOCKER_IMAGE_NAME}}" "$DOCKER_IMAGE_NAME"
 replace_in_file "Dockerfile.template" "{{CONFIG_DIR_NAME}}" "$CONFIG_DIR_NAME"
@@ -267,12 +268,22 @@ fi
 # Get current date
 CURRENT_DATE=$(date +%Y-%m-%d)
 
+# Extract Docker Hub username and repo name from DOCKER_IMAGE_NAME
+DOCKERHUB_USERNAME=$(echo "$DOCKER_IMAGE_NAME" | cut -d'/' -f1)
+DOCKERHUB_REPO=$(echo "$DOCKER_IMAGE_NAME" | cut -d'/' -f2)
+
+# Extract vendor/owner from SOURCE_REPO for dynamic vendor namespace
+VENDOR_NAMESPACE=$(echo "$SOURCE_REPO" | cut -d'/' -f1)
+
 # Replace all variables
 replace_in_file "README.md.tmp" "{{CLI_TOOL_NAME}}" "$CLI_TOOL_NAME"
 replace_in_file "README.md.tmp" "{{CLI_TOOL_DISPLAY_NAME}}" "$CLI_TOOL_DISPLAY_NAME"
 replace_in_file "README.md.tmp" "{{CLI_TOOL_SHORTNAME}}" "$CLI_TOOL_SHORTNAME"
 replace_in_file "README.md.tmp" "{{TOOL_DESCRIPTION}}" "$TOOL_DESCRIPTION"
 replace_in_file "README.md.tmp" "{{DOCKER_IMAGE_NAME}}" "$DOCKER_IMAGE_NAME"
+replace_in_file "README.md.tmp" "{{DOCKERHUB_USERNAME}}" "$DOCKERHUB_USERNAME"
+replace_in_file "README.md.tmp" "{{DOCKERHUB_REPO}}" "$DOCKERHUB_REPO"
+replace_in_file "README.md.tmp" "{{VENDOR_NAMESPACE}}" "$VENDOR_NAMESPACE"
 replace_in_file "README.md.tmp" "{{CONFIG_DIR_NAME}}" "$CONFIG_DIR_NAME"
 replace_in_file "README.md.tmp" "{{SOURCE_REPO}}" "$SOURCE_REPO"
 replace_in_file "README.md.tmp" "{{DOCS_URL}}" "$DOCS_URL"
@@ -282,6 +293,41 @@ replace_in_file "README.md.tmp" "{{CURRENT_DATE}}" "$CURRENT_DATE"
 
 mv README.md.tmp README.md
 success "README.md configured"
+
+ info "Updating LLM_USAGE.md..."
+cp LLM_USAGE.md.template LLM_USAGE.md.tmp
+
+# Handle conditional blocks for AUTH_REQUIRED in LLM_USAGE.md
+if [ "$AUTH_REQUIRED" = "true" ]; then
+    # Remove conditional markers but keep content
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' '/{{#if AUTH_REQUIRED}}/d' LLM_USAGE.md.tmp
+        sed -i '' '/{{\\/if}}/d' LLM_USAGE.md.tmp
+    else
+        sed -i '/{{#if AUTH_REQUIRED}}/d' LLM_USAGE.md.tmp
+        sed -i '/{{\\/if}}/d' LLM_USAGE.md.tmp
+    fi
+else
+    # Remove entire conditional blocks including content
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' '/{{#if AUTH_REQUIRED}}/,/{{\\/if}}/d' LLM_USAGE.md.tmp
+    else
+        sed -i '/{{#if AUTH_REQUIRED}}/,/{{\\/if}}/d' LLM_USAGE.md.tmp
+    fi
+fi
+
+# Replace all variables in LLM_USAGE.md
+replace_in_file "LLM_USAGE.md.tmp" "{{CLI_TOOL_NAME}}" "$CLI_TOOL_NAME"
+replace_in_file "LLM_USAGE.md.tmp" "{{CLI_TOOL_DISPLAY_NAME}}" "$CLI_TOOL_DISPLAY_NAME"
+replace_in_file "LLM_USAGE.md.tmp" "{{DOCKER_IMAGE_NAME}}" "$DOCKER_IMAGE_NAME"
+replace_in_file "LLM_USAGE.md.tmp" "{{CONFIG_DIR_NAME}}" "$CONFIG_DIR_NAME"
+replace_in_file "LLM_USAGE.md.tmp" "{{SOURCE_REPO}}" "$SOURCE_REPO"
+replace_in_file "LLM_USAGE.md.tmp" "{{DOCS_URL}}" "$DOCS_URL"
+replace_in_file "LLM_USAGE.md.tmp" "{{AUTH_COMMAND}}" "$AUTH_COMMAND"
+replace_in_file "LLM_USAGE.md.tmp" "{{EXAMPLE_COMMAND}}" "$EXAMPLE_COMMAND"
+
+mv LLM_USAGE.md.tmp LLM_USAGE.md
+success "LLM_USAGE.md configured"
 
 # Clean up template files
 info "Cleaning up template files..."
