@@ -73,24 +73,24 @@ Review and customize the generated files:
 
 The setup script uses the following variables (defined in `.template.json`):
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `CLI_TOOL_NAME` | Command name | `glab` |
-| `CLI_TOOL_DISPLAY_NAME` | Full display name | `GitLab CLI` |
-| `CLI_TOOL_SHORTNAME` | Acronym | `GLAB` |
-| `DOWNLOAD_URL` | Binary download URL | `https://gitlab.com/...` |
-| `ARCHIVE_TYPE` | Download format | `binary`, `tar.gz`, or `zip` |
-| `EXTRACT_PATH` | Path within archive | `bin/glab` (optional) |
-| `DOCKER_IMAGE_NAME` | Docker Hub image | `username/glab` |
-| `BINARY_NAME` | Binary filename | `glab` |
-| `CONFIG_DIR_NAME` | Config directory | `glab` |
-| `SOURCE_REPO` | Repository path | `user/repo` |
-| `DOCS_URL` | Official docs | `https://docs.example.com` |
-| `AUTH_REQUIRED` | Needs auth? | `true` or `false` |
-| `AUTH_COMMAND` | Auth command | `login` |
-| `EXAMPLE_COMMAND` | Example usage | `version` |
-| `BASE_IMAGE` | Build stage image | `alpine/curl:8.11.1` |
-| `RUNTIME_IMAGE` | Runtime image | `alpine:3.21` |
+| Variable                | Description         | Example                      |
+|-------------------------|---------------------|------------------------------|
+| `CLI_TOOL_NAME`         | Command name        | `glab`                       |
+| `CLI_TOOL_DISPLAY_NAME` | Full display name   | `GitLab CLI`                 |
+| `CLI_TOOL_SHORTNAME`    | Acronym             | `GLAB`                       |
+| `DOWNLOAD_URL`          | Binary download URL | `https://gitlab.com/...`     |
+| `ARCHIVE_TYPE`          | Download format     | `binary`, `tar.gz`, or `zip` |
+| `EXTRACT_PATH`          | Path within archive | `bin/glab` (optional)        |
+| `DOCKER_IMAGE_NAME`     | Docker Hub image    | `username/glab`              |
+| `BINARY_NAME`           | Binary filename     | `glab`                       |
+| `CONFIG_DIR_NAME`       | Config directory    | `glab`                       |
+| `SOURCE_REPO`           | Repository path     | `user/repo`                  |
+| `DOCS_URL`              | Official docs       | `https://docs.example.com`   |
+| `AUTH_REQUIRED`         | Needs auth?         | `true` or `false`            |
+| `AUTH_COMMAND`          | Auth command        | `login`                      |
+| `EXAMPLE_COMMAND`       | Example usage       | `version`                    |
+| `BASE_IMAGE`            | Build stage image   | `alpine/curl:8.11.1`         |
+| `RUNTIME_IMAGE`         | Runtime image       | `alpine:3.21`                |
 
 ## Template Structure
 
